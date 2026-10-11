@@ -267,6 +267,39 @@ textarea{resize:vertical;line-height:1.6}
 .insight{white-space:pre-wrap;line-height:1.7;font-size:13.5px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;overflow-wrap:anywhere}
 .dimtabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
 
+/* lab */
+.diag-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:10px;margin-top:14px}
+.diag{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;display:flex;flex-direction:column;gap:7px;min-width:0}
+.diag.warn{border-color:var(--warn);background:var(--warn-soft)}
+.diag h4{font-size:13.5px;display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.diag .big{font-family:var(--font-num);font-size:22px;font-weight:600;line-height:1.2}
+.diag p{font-size:12.5px;color:var(--ink-2)}
+.diag p b{color:var(--ink)}
+.li{display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:8px;align-items:baseline;text-align:left;border:0;border-top:1px solid var(--line);background:none;font:inherit;color:inherit;padding:6px 0;cursor:pointer;width:100%}
+.li:hover .t{text-decoration:underline}
+.li .t{font-size:13px;overflow-wrap:anywhere}
+.li .num{font-size:12px;color:var(--ink-2);white-space:nowrap}
+.mini-tbl{min-width:0}
+.mini-tbl th,.mini-tbl td{padding:5px 6px;font-size:12px}
+.pill.bad{color:var(--warn);background:var(--warn-soft)}
+.prog{display:inline-block;width:80px;height:6px;border-radius:3px;background:var(--sunk);vertical-align:middle;margin-right:6px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--gold)}
+.plan-form{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.plan-form input{flex:1 1 220px;width:auto}
+.plans{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:10px}
+.plan{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:9px;min-width:0}
+.plan.done{border-style:dashed}
+.plan-top{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.pnum{font-family:var(--font-num);font-size:11.5px;color:var(--accent);font-weight:600;letter-spacing:.06em}
+.plan .pc{font-size:15px;overflow-wrap:anywhere}
+.thumb{background:var(--ink);color:var(--paper);border-radius:8px;padding:14px 12px;font-weight:700;font-size:17px;letter-spacing:-.01em;text-align:center;line-height:1.35;overflow-wrap:anywhere}
+.thumb small{display:block;font-size:11px;font-weight:500;opacity:.72;margin-bottom:4px;letter-spacing:.02em}
+.hookline{font-size:13.5px;font-weight:600;overflow-wrap:anywhere}
+.plan p.k{font-size:12.5px;color:var(--ink-2);overflow-wrap:anywhere}
+.plan p.k b{color:var(--ink);margin-right:6px}
+details summary{cursor:pointer;font-size:12.5px;color:var(--accent);font-weight:600}
+.script{white-space:pre-wrap;font-size:13px;background:var(--sunk);border-radius:8px;padding:10px 12px;margin:8px 0;line-height:1.65;overflow-wrap:anywhere}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;align-items:end;margin-top:10px}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:9px 14px;border-radius:8px;font-size:13px;z-index:40;max-width:calc(100% - 32px);box-shadow:var(--shadow)}
 .foot{margin-top:40px;font-size:12px;color:var(--mute)}
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
@@ -306,17 +339,20 @@ const CTYPES = [
 const DIMS = [
   { key: "appeal", label: "소구점" },
   { key: "hook",   label: "후킹 유형" },
+  { key: "format", label: "광고 형식" },
   { key: "layout", label: "영상 형식" },
   { key: "cast",   label: "출연" },
   { key: "target", label: "타깃" }
 ];
 const DEFAULT_TAX = {
-  appeal: ["자금 한도","저금리","거절 사유","기업인증","지원사업","마감 임박","성공 사례"],
-  hook:   ["손해형","비밀형","숫자형","질문형","충격형","공감형"],
+  appeal: ["무상 지원금","자금 한도","저금리","마감 임박","신청자 수","성공 사례","재기·회복","성장·확장","숨은 자금","거절 사유","기업인증","전략·로드맵"],
+  hook:   ["손해형","비밀형","숫자형","질문형","충격형","공감형","정보형"],
+  format: ["이미지","영상","자동 조합"],
   layout: ["토킹헤드","자막카드","상황극","화면녹화","인터뷰·후기"],
   cast:   ["인쌤 출연","대표님 출연","화면·자료","AI·모션"],
-  target: ["소상공인","중소기업","예비창업자","법인 대표","전체"]
+  target: ["소상공인","요식업·자영업","중소기업","청년 대표","저신용","수출 셀러","예비창업자","법인 대표","전체"]
 };
+const RULE_DEFAULTS = { testBudget: 100000, testLeads: 10, winMargin: 20 };
 const STATUS_KO = { ACTIVE:"게재중", PAUSED:"꺼짐", CAMPAIGN_PAUSED:"캠페인 꺼짐", ADSET_PAUSED:"세트 꺼짐", DISAPPROVED:"승인 거부", PENDING_REVIEW:"검토중", WITH_ISSUES:"문제 있음", ARCHIVED:"보관됨", DELETED:"삭제됨", IN_PROCESS:"처리중", PENDING_BILLING_INFO:"결제 정보 필요", PREAPPROVED:"사전 승인" };
 const AAR = [
   { sec: "01 목표", fields: [["hypothesis","가설 (기획 의도)"],["usp","핵심 소구점"],["background","배경 (왜 이 시점에)"]] },
@@ -333,7 +369,8 @@ const VOICE = [
   "- 숫자나 구체적인 단어 넣기 (예: 3천만원, 10분, 2가지)",
   "- 추상적인 문장 금지. 대표님이 얻는 이득이 머릿속에 그려지게",
   "- 꿀팁을 전수하는 느낌",
-  "- '무조건 승인', '100% 가능', '누구나 받는' 같은 보장·과장 표현 금지 (정책자금은 심사가 있어요)"
+  "- '무조건 승인', '100% 가능', '누구나 받는' 같은 보장·과장 표현 금지 (정책자금은 심사가 있어요)",
+  "- 메타 금융 광고 정책 주의: '미승인 시 100% 환불', '승인률 OO%·업계 1위', 근거 없는 '선착순·소진 임박', 융자를 '무상 지원금'이라고 부르는 표현 금지. 실제 공고가 있는 사업만 사업명·금액을 쓰고, 모르면 [사업명], [최대 금액]처럼 빈칸으로 남기기"
 ].join("\n");
 
 /* ---------- helpers ---------- */
@@ -361,7 +398,7 @@ function normAd(a) {
 
 /* ---------- state ---------- */
 const hashTab = (location.hash || "").replace("#", "");
-const TABS = [["ops","소재 운영"],["perf","성과 분석"],["rep","위닝 보고서"],["dim","분류 분석"],["set","설정"]];
+const TABS = [["ops","소재 운영"],["perf","성과 분석"],["lab","기획실"],["rep","위닝 보고서"],["dim","분류 분석"],["set","설정"]];
 const initialTab = TABS.some(t => t[0] === hashTab) ? hashTab : (store.get("hub.tab") || "");
 const S = {
   tab: TABS.some(t => t[0] === initialTab) ? initialTab : "ops", tabChosen: !!initialTab,
@@ -372,13 +409,18 @@ const S = {
   daily: {}, stageFilter: null, sort: "cpl", liveOnly: false, dim: "appeal",
   insight: { status: "idle", text: "" },
   drawer: null, rep: { id: null, draft: null, dirty: false, saving: false }, setDraft: null, setDirty: false,
-  aiBusy: {}, aiOff: false, importBusy: false
+  aiBusy: {}, aiOff: false, importBusy: false,
+  strategy: { analysis: null, plan: null }, lab: { count: 3, dir: "", rules: null, rulesDirty: false, liveText: "" }
 };
 function mergeSettings(d) {
   const tax = {};
   for (const dm of DIMS) { const v = d && d.taxonomy && Array.isArray(d.taxonomy[dm.key]) && d.taxonomy[dm.key].length ? d.taxonomy[dm.key] : DEFAULT_TAX[dm.key]; tax[dm.key] = v.map(String); }
-  return { adAccountId: (d && d.adAccountId) || "", adAccountName: (d && d.adAccountName) || "", landing: (d && d.landing) || "", taxonomy: tax };
+  const r = (d && d.rules) || {};
+  const pos = (v, dflt) => (Number(v) > 0 ? Number(v) : dflt);
+  return { adAccountId: (d && d.adAccountId) || "", adAccountName: (d && d.adAccountName) || "", landing: (d && d.landing) || "", taxonomy: tax,
+    rules: { testBudget: pos(r.testBudget, RULE_DEFAULTS.testBudget), testLeads: pos(r.testLeads, RULE_DEFAULTS.testLeads), winMargin: pos(r.winMargin, RULE_DEFAULTS.winMargin) } };
 }
+const analyzable = c => !c.excluded;
 
 /* ---------- domain ---------- */
 function maxCodeNum() { let max = 0; for (const c of S.creatives) { const m = /^IS(\d+)$/.exec(c.code || ""); if (m) max = Math.max(max, +m[1]); } return max; }
@@ -413,6 +455,7 @@ function agg(ads) {
   }
   t.cpl = t.leads ? t.spend / t.leads : null;
   t.ctr = t.imp ? t.clicks / t.imp : null;
+  t.cvr = t.clicks ? t.leads / t.clicks : null;
   t.hold25 = t.plays ? t.p25 / t.plays : null;
   t.done = t.plays ? t.p100 / t.plays : null;
   t.avgWatch = t.plays ? t.watchSum / t.plays : null;
@@ -451,7 +494,7 @@ function insightsFor(c, m, avg, rows) {
   if (m.spend >= 50000 && m.leads === 0) out.push({ tone: "warn", title: "리드 0건", text: `${wonShort(m.spend)}을 썼는데 리드가 없어요. 양식 연결이나 타깃을 확인해 보세요.` });
   if (m.plays >= 1000 && fin(m.hold25) && m.hold25 < 0.15) out.push({ tone: "warn", title: "첫 3초 이탈", text: `재생한 사람 중 25%까지 본 비율이 ${pct(m.hold25)}예요. 첫 1줄 후킹을 숫자형·손해형으로 바꿔보세요.` });
   if (m.imp >= 3000 && fin(m.ctr) && m.ctr < 0.008) out.push({ tone: "warn", title: "클릭 낮음", text: `링크 클릭률이 ${pct(m.ctr, 2)}예요. 혜택을 숫자로, 행동 유도를 더 구체적으로 적어보세요.` });
-  if (m.leads >= 20 && m.consults > 0 && m.consults / m.leads < 0.2) out.push({ tone: "warn", title: "DB 질", text: `리드 ${int(m.leads)}건 중 상담은 ${int(m.consults)}건(${pct(m.consults / m.leads, 0)})이에요. 양식에 질문을 하나 더 넣어 DB 질을 올려보세요.` });
+  if (m.clicks >= 200 && fin(m.cvr) && m.cvr < 0.08) out.push({ tone: "warn", title: "양식 이탈", text: `클릭한 사람 중 신청까지 한 비율이 ${pct(m.cvr)}예요. 양식 질문 수를 줄이거나, 광고와 양식 첫 화면의 말을 똑같이 맞춰보세요.` });
   if (rows && rows.length >= 10) {
     const last = rows.slice(-7), prev = rows.slice(-14, -7);
     const sum = (r, k) => r.reduce((s, x) => s + x[k], 0);
@@ -514,7 +557,7 @@ document.addEventListener("focusout", () => setTimeout(() => {
 }, 0));
 
 function renderTabs() {
-  const counts = { ops: S.creatives.length, rep: S.creatives.filter(c => c.winning).length };
+  const counts = { ops: S.creatives.length, rep: S.creatives.filter(c => c.winning).length, lab: ((S.strategy.plan && S.strategy.plan.items) || []).filter(x => !x.registeredId).length };
   $("#tabs").innerHTML = TABS.map(([k, label]) => `<button class="tab" role="tab" data-act="tab" data-v="${k}" aria-selected="${S.tab === k}">${label}${counts[k] ? `<span class="n">${counts[k]}</span>` : ""}</button>`).join("");
 }
 function renderSync() {
@@ -530,7 +573,7 @@ function renderView() {
   const v = $("#view");
   let html = "";
   try {
-    html = S.tab === "ops" ? viewOps() : S.tab === "perf" ? viewPerf() : S.tab === "rep" ? viewRep() : S.tab === "dim" ? viewDim() : viewSet();
+    html = S.tab === "ops" ? viewOps() : S.tab === "perf" ? viewPerf() : S.tab === "lab" ? viewLab() : S.tab === "rep" ? viewRep() : S.tab === "dim" ? viewDim() : viewSet();
   } catch (e) { console.error(e); html = `<div class="note warn">화면을 그리다 문제가 생겼어요. 새로고침해 주세요.</div>`; }
   v.innerHTML = html;
   if (S.tab === "set" || !S.settings.adAccountId) startAccountsWatch();
@@ -576,9 +619,10 @@ function metaBanner() {
   return `<div class="note warn" role="status">${h(msg)} ${btn || ""}${S.meta.ads.length ? `<span class="muted">마지막으로 불러온 데이터를 보여드리고 있어요.</span>` : ""}</div>`;
 }
 function totals(ms) {
-  const t = { spend: 0, leads: 0, imp: 0, clicks: 0, consults: 0, contracts: 0 };
-  for (const m of ms) { t.spend += m.spend; t.leads += m.leads; t.imp += m.imp; t.clicks += m.clicks; t.consults += m.consults; t.contracts += m.contracts; }
-  t.cpl = t.leads ? t.spend / t.leads : null; t.ctr = t.imp ? t.clicks / t.imp : null; t.cpContract = t.contracts ? t.spend / t.contracts : null;
+  const t = { spend: 0, leads: 0, imp: 0, clicks: 0 };
+  for (const m of ms) { t.spend += m.spend; t.leads += m.leads; t.imp += m.imp; t.clicks += m.clicks; }
+  t.cpl = t.leads ? t.spend / t.leads : null; t.ctr = t.imp ? t.clicks / t.imp : null; t.cvr = t.clicks ? t.leads / t.clicks : null;
+  t.cpm = t.imp ? t.spend / t.imp * 1000 : null;
   return t;
 }
 const kpi = (k, v, s, cls) => `<div class="kpi ${cls || ""}"><div class="k">${k}</div><div class="v">${v}</div>${s ? `<div class="s ${s.cls || ""}">${s.text}</div>` : ""}</div>`;
@@ -599,14 +643,15 @@ function viewPerf() {
   const avg = accountAvgCpl();
   const all = S.creatives.map(c => ({ c, m: metricsFor(c) })).filter(x => x.m.n > 0);
   const items = all.filter(x => !S.liveOnly || x.m.active).sort(SORTS[S.sort][1]);
-  const t = totals(all.map(x => x.m));
+  const pool = all.filter(x => analyzable(x.c));
+  const t = totals(pool.map(x => x.m));
   const tiles = `<div class="kpis">
-    ${kpi("소진액", wonShort(t.spend), { text: `허브 소재 ${all.length}개 합계` })}
+    ${kpi("소진액", wonShort(t.spend), { text: `분석 대상 소재 ${pool.length}개 합계` })}
     ${kpi("메타 리드", int(t.leads))}
     ${kpi("리드당 비용", won(t.cpl), avg ? { text: `계정 전체 평균 ${won(avg)}` } : null, "key")}
-    ${kpi("링크 CTR", pct(t.ctr, 2))}
-    ${kpi("상담", int(t.consults), { text: t.leads ? `리드의 ${pct(t.consults / t.leads, 0)}` : "직접 입력" })}
-    ${kpi("계약", int(t.contracts), { text: t.contracts ? `계약당 ${wonShort(t.cpContract)}` : "직접 입력" })}
+    ${kpi("링크 CTR", pct(t.ctr, 2), { text: "노출 대비 클릭" })}
+    ${kpi("클릭 → 리드", pct(t.cvr), { text: "클릭한 사람 중 신청 비율" })}
+    ${kpi("CPM", won(t.cpm), { text: "노출 1,000회 비용" })}
   </div>`;
   const toolbar = `<div class="toolbar"><label class="f" style="flex-direction:row;align-items:center;gap:8px"><span>정렬</span><select id="sort">${Object.entries(SORTS).map(([k, v]) => `<option value="${k}" ${S.sort === k ? "selected" : ""}>${v[0]}</option>`).join("")}</select></label>
     <button class="toggle" data-act="live-only" aria-pressed="${S.liveOnly}">게재중만 보기</button></div>`;
@@ -619,11 +664,11 @@ function cardHtml(x, avg) {
   const diff = (avg && fin(m.cpl)) ? (m.cpl - avg) / avg : null;
   const cand = !c.winning && isCandidate(m, avg);
   return `<button class="card ${c.winning ? "is-win" : ""}" data-act="open" data-id="${h(c.id)}" data-tab="perf">
-    <span class="card-top"><span class="code">${h(c.code)}</span><span class="badges">${m.active ? `<span class="pill live">게재중</span>` : `<span class="pill off">꺼짐</span>`}${c.winning ? `<span class="pill win">★ 위닝</span>` : ""}${cand ? `<span class="pill cand">위닝 후보</span>` : ""}</span></span>
+    <span class="card-top"><span class="code">${h(c.code)}</span><span class="badges">${m.active ? `<span class="pill live">게재중</span>` : `<span class="pill off">꺼짐</span>`}${c.winning ? `<span class="pill win">★ 위닝</span>` : ""}${cand ? `<span class="pill cand">위닝 후보</span>` : ""}${c.excluded ? `<span class="pill off">분석 제외</span>` : ""}</span></span>
     <span class="title">${h(c.concept || "(컨셉명 없음)")}</span>
     <span class="chips">${DIMS.map(d => c.tags && c.tags[d.key] ? `<span class="tag">${h(c.tags[d.key])}</span>` : "").join("") || `<span class="tag">분류 전</span>`}</span>
     <span class="m3"><span class="m"><span class="k">소진액</span><span class="v">${wonShort(m.spend)}</span></span><span class="m"><span class="k">리드</span><span class="v">${int(m.leads)}</span></span><span class="m"><span class="k">리드당 비용</span><span class="v">${won(m.cpl)}</span></span></span>
-    <span class="m3"><span class="m"><span class="k">링크 CTR</span><span class="v">${pct(m.ctr, 2)}</span></span><span class="m"><span class="k">25% 시청</span><span class="v">${pct(m.hold25)}</span></span><span class="m"><span class="k">세팅</span><span class="v">${m.n}개</span></span></span>
+    <span class="m3"><span class="m"><span class="k">링크 CTR</span><span class="v">${pct(m.ctr, 2)}</span></span><span class="m"><span class="k">클릭 → 리드</span><span class="v">${pct(m.cvr)}</span></span><span class="m"><span class="k">${m.plays ? "25% 시청" : "세팅"}</span><span class="v">${m.plays ? pct(m.hold25) : m.n + "개"}</span></span></span>
     ${diff != null && m.leads >= 3 ? `<span class="vs ${diff <= 0 ? "good" : "bad"}">계정 평균보다 리드당 ${Math.abs(Math.round(diff * 100))}% ${diff <= 0 ? "저렴" : "비쌈"}</span>` : ""}
   </button>`;
 }
@@ -661,6 +706,244 @@ async function importGroups(groups) {
   finally { S.importBusy = false; scheduleRender(); }
 }
 
+/* ---------- view: 기획실 ---------- */
+const median = arr => { const a = arr.filter(fin).sort((x, y) => x - y); if (!a.length) return null; const k = Math.floor(a.length / 2); return a.length % 2 ? a[k] : (a[k - 1] + a[k]) / 2; };
+function labPool() { return S.creatives.filter(analyzable).map(c => ({ c, m: metricsFor(c) })).filter(x => x.m.n > 0); }
+function labDiag() {
+  const R = S.settings.rules, pool = labPool();
+  const t = totals(pool.map(x => x.m)), avg = t.cpl, margin = R.winMargin / 100;
+  const judged = pool.filter(x => x.m.leads >= R.testLeads && fin(x.m.cpl));
+  const asc = judged.slice().sort((a, b) => a.m.cpl - b.m.cpl);
+  const top = asc.slice(0, 5), bottom = asc.slice().reverse().slice(0, 5).filter(x => !top.includes(x));
+  const fm = new Map();
+  for (const x of pool) { const k = (x.c.tags && x.c.tags.format) || "미분류"; if (!fm.has(k)) fm.set(k, []); fm.get(k).push(x.m); }
+  const formats = [...fm.entries()].map(([k, ms]) => ({ k, count: ms.length, ...totals(ms) })).sort((a, b) => (fin(a.cpl) ? a.cpl : Infinity) - (fin(b.cpl) ? b.cpl : Infinity));
+  const bySpend = pool.slice().sort((a, b) => b.m.spend - a.m.spend);
+  const top5share = t.spend ? bySpend.slice(0, 5).reduce((s, x) => s + x.m.spend, 0) / t.spend : null;
+  const scaleUp = avg ? asc.filter(x => x.m.cpl <= avg * (1 - margin) && x.m.spend / t.spend < 0.05) : [];
+  const scaleDown = avg ? judged.filter(x => x.m.cpl >= avg * (1 + margin) && x.m.spend / t.spend >= 0.05).sort((a, b) => b.m.spend - a.m.spend) : [];
+  const early = pool.filter(x => !x.m.active && x.m.spend < R.testBudget && x.m.leads < R.testLeads);
+  const zero = pool.filter(x => x.m.spend >= 50000 && x.m.leads === 0).sort((a, b) => b.m.spend - a.m.spend);
+  const disapproved = S.meta.ads.filter(a => a.status === "DISAPPROVED");
+  const cheap = judged.filter(x => x.m.cpl <= avg), pricey = judged.filter(x => x.m.cpl > avg);
+  const base = { ctrCheap: median(cheap.map(x => x.m.ctr)), ctrPricey: median(pricey.map(x => x.m.ctr)), cvrCheap: median(cheap.map(x => x.m.cvr)), cvrPricey: median(pricey.map(x => x.m.cvr)), nCheap: cheap.length, nPricey: pricey.length };
+  const bestByDim = DIMS.map(dm => { const rows = dimRows(dm.key).filter(r => r.k !== "미분류" && fin(r.cpl) && (r.count >= 2 || r.leads >= 30)); return { dm, best: rows[0] || null, worst: rows.length > 1 ? rows[rows.length - 1] : null }; }).filter(x => x.best);
+  const live = S.creatives.filter(c => analyzable(c) && c.status === "live").map(c => ({ c, m: metricsFor(c) })).filter(x => x.m.n > 0);
+  return { R, pool, t, avg, margin, judged, top, bottom, formats, top5share, scaleUp, scaleDown, early, zero, disapproved, base, bestByDim, live };
+}
+function verdict(m, d) {
+  const prog = Math.max(m.spend / d.R.testBudget, m.leads / d.R.testLeads);
+  if (prog < 1) return { label: `판정 대기 ${Math.round(prog * 100)}%`, cls: "plan", prog };
+  if (!fin(m.cpl)) return { label: "교체 권장 · 리드 0", cls: "bad", prog };
+  if (m.cpl <= d.avg * (1 - d.margin)) return { label: "위닝 후보", cls: "win", prog };
+  if (m.cpl >= d.avg * (1 + d.margin)) return { label: "교체 권장", cls: "bad", prog };
+  return { label: "유지 · 관찰", cls: "live", prog };
+}
+const liItem = (x, right) => `<button class="li" data-act="open" data-id="${h(x.c.id)}" data-tab="perf"><span class="code">${h(x.c.code)}</span><span class="t">${h(x.c.concept || "(컨셉명 없음)")}</span><span class="num">${right}</span></button>`;
+function viewLab() {
+  const head = `<div class="bar-row"><div><h2>기획실</h2><p class="sub">지금까지 돌린 메타 광고를 신규 리드 기준으로 진단하고, 다음에 만들 소재와 테스트 방법을 정해요.</p></div></div>`;
+  if (S.dbState === "off") return head + noDb();
+  if (S.dbState === "loading") return head + `<div class="empty"><b>불러오는 중이에요</b></div>`;
+  const ai = !!(S.sample && !S.aiOff);
+  const metaOk = !!(S.mcp && S.settings.adAccountId && S.meta.ads.length);
+  const d = metaOk ? labDiag() : null;
+  let html = head;
+  if (!metaOk) html += `<div class="note">${S.meta.error ? h(mcpMsg(S.meta.error).msg) : !S.mcp ? "이 화면에서는 메타 성과를 불러올 수 없어서 진단이 비어 있어요. 저장된 분석과 기획안은 아래에서 볼 수 있어요." : "메타 성과를 불러오는 중이에요…"}</div>`;
+  else if (!d.pool.length) html += `<div class="empty"><b>분석할 소재가 아직 없어요</b><p>성과 분석 탭에서 메타 광고를 가져오면 진단이 시작돼요.</p><button class="btn" data-act="tab" data-v="perf">성과 분석으로</button></div>`;
+  else html += labSummary(d) + labDiagHtml(d);
+  html += labAnalysisHtml(ai) + labPlanHtml(ai);
+  if (d && d.pool.length) html += labTests(d);
+  html += labRulesHtml();
+  return html;
+}
+function labSummary(d) {
+  return `<div class="kpis">
+    ${kpi("분석 소재", d.pool.length + "개", { text: `리드 목적 광고만 · 제외 ${S.creatives.filter(c => c.excluded).length}개` })}
+    ${kpi("소진액", wonShort(d.t.spend))}${kpi("메타 리드", int(d.t.leads))}
+    ${kpi("평균 리드당 비용", won(d.avg), null, "key")}${kpi("링크 CTR", pct(d.t.ctr, 2))}${kpi("클릭 → 리드", pct(d.t.cvr))}</div>`;
+}
+function labDiagHtml(d) {
+  const R = d.R, cards = [];
+  cards.push(`<div class="diag"><h4>리드 효율 TOP ${d.top.length}<em>리드 ${R.testLeads}건 이상</em></h4>${d.top.length ? d.top.map(x => liItem(x, `${won(x.m.cpl)} · ${int(x.m.leads)}건`)).join("") : `<p>아직 기준을 넘은 소재가 없어요.</p>`}</div>`);
+  cards.push(`<div class="diag"><h4>광고 형식별 리드당 비용</h4><table class="mini-tbl"><thead><tr><th>형식</th><th class="n">소재</th><th class="n">리드당</th><th class="n">CTR</th><th class="n">클릭→리드</th></tr></thead><tbody>${d.formats.map(f => `<tr><td>${h(f.k)}</td><td class="n">${f.count}</td><td class="n">${won(f.cpl)}</td><td class="n">${pct(f.ctr, 2)}</td><td class="n">${pct(f.cvr)}</td></tr>`).join("")}</tbody></table>${d.formats.some(f => f.k === "미분류") ? `<p>‘미분류’는 광고 형식 칩이 비어 있는 소재예요.</p>` : ""}</div>`);
+  const ctrLine = fin(d.base.ctrCheap) && fin(d.base.ctrPricey) ? `<p>평균보다 싸게 리드를 받은 소재(${d.base.nCheap}개)의 링크 CTR 중간값은 <b>${pct(d.base.ctrCheap, 2)}</b>, 비싼 소재(${d.base.nPricey}개)는 <b>${pct(d.base.ctrPricey, 2)}</b>예요. 클릭→리드는 ${pct(d.base.cvrCheap)} vs ${pct(d.base.cvrPricey)}.</p><p>새 소재는 첫 판정 때 링크 CTR ${pct(d.base.ctrCheap, 1)} 이상을 목표로 보세요.</p>` : `<p>비교할 소재가 아직 부족해요.</p>`;
+  cards.push(`<div class="diag"><h4>무엇이 리드당 비용을 가르나</h4>${ctrLine}</div>`);
+  cards.push(`<div class="diag"><h4>예산 배분<em>상위 5개 소재 비중</em></h4><div class="big">${pct(d.top5share, 0)}</div>
+    ${d.scaleUp.length ? `<p>싸게 받는데 예산을 적게 쓴 소재 → <b>증액·복제 후보</b></p>${d.scaleUp.slice(0, 4).map(x => liItem(x, `${won(x.m.cpl)} · ${wonShort(x.m.spend)}`)).join("")}` : `<p>증액 후보는 없어요.</p>`}
+    ${d.scaleDown.length ? `<p>비싼데 예산을 많이 쓴 소재 → <b>감액·교체 후보</b></p>${d.scaleDown.slice(0, 3).map(x => liItem(x, `${won(x.m.cpl)} · ${wonShort(x.m.spend)}`)).join("")}` : ""}</div>`);
+  if (d.bestByDim.length) cards.push(`<div class="diag"><h4>잘 되는 분류<em>소재 2개 이상 또는 리드 30건 이상</em></h4>${d.bestByDim.map(b => `<p><b>${b.dm.label}</b> ${h(b.best.k)} ${won(b.best.cpl)}${b.worst ? ` <span class="muted">· 가장 비싼 ${h(b.worst.k)} ${won(b.worst.cpl)}</span>` : ""}</p>`).join("")}<p class="muted">분류 칩이 채워진 소재만 계산돼요.</p></div>`);
+  const earlySpend = d.early.reduce((s, x) => s + x.m.spend, 0);
+  cards.push(`<div class="diag"><h4>판정 전에 꺼진 테스트</h4><div class="big">${d.early.length}개</div><p>${d.early.length ? `${wonShort(earlySpend)}을 썼지만 기준(소진 ${wonShort(R.testBudget)} 또는 리드 ${R.testLeads}건)에 닿기 전에 꺼져서 좋은 소재였는지 알 수 없어요. 새 테스트는 아래 규칙까지 기다려 주세요.` : `기준(소진 ${wonShort(R.testBudget)} 또는 리드 ${R.testLeads}건) 전에 꺼진 소재가 없어요.`}</p></div>`);
+  if (d.zero.length) cards.push(`<div class="diag"><h4>리드 0건 소재<em>5만원 이상 사용</em></h4><div class="big">${wonShort(d.zero.reduce((s, x) => s + x.m.spend, 0))}</div>${d.zero.slice(0, 5).map(x => liItem(x, wonShort(x.m.spend))).join("")}</div>`);
+  if (d.disapproved.length) cards.push(`<div class="diag warn"><h4>승인 거부된 광고 ${d.disapproved.length}개</h4>${d.disapproved.slice(0, 4).map(a => `<p>· ${h(a.name)} <span class="muted">${wonShort(a.spend)} · 리드 ${int(a.leads)}</span></p>`).join("")}<p>보장·무상·선착순 같은 표현이 실제 사업 내용과 맞는지 확인하세요. 같은 문구를 다시 쓰면 또 거부될 수 있어요.</p></div>`);
+  if (d.bottom.length) cards.push(`<div class="diag"><h4>리드당 비용이 높은 소재</h4>${d.bottom.map(x => liItem(x, `${won(x.m.cpl)} · ${int(x.m.leads)}건`)).join("")}</div>`);
+  return `<div class="diag-grid">${cards.join("")}</div>`;
+}
+function labAnalysisHtml(ai) {
+  const a = S.strategy.analysis, busy = S.aiBusy.labAnalysis;
+  const btn = !ai ? "" : busy ? `<button class="btn sm" data-act="lab-stop">멈추기</button>` : `<button class="btn ai" data-act="lab-ai-analysis" ${S.meta.ads.length ? "" : "disabled"}>✦ ${a ? "다시 분석" : "패턴 분석하기"}</button>`;
+  return `<section class="block"><div class="bar-row"><div><h3>패턴 분석</h3><p class="sub">잘 된 소재와 안 된 소재의 문구·제목·형식을 나란히 놓고 차이와 다음 기획 원칙을 뽑아요.</p></div><div class="actions">${btn}</div></div>
+    ${busy ? `<div class="insight" id="lab-live">${h(S.lab.liveText || "생각하는 중… (30초~1분)")}</div>`
+      : a ? `<div class="insight">${h(a.text)}</div><p class="hint">${h(a.source || "분석")} · ${h(String(a.createdAt || "").slice(0, 10))}${a.basis ? " · " + h(a.basis) : ""}</p>`
+      : `<div class="empty"><b>아직 분석이 없어요</b><p>‘패턴 분석하기’를 누르면 지금 데이터로 분석해요.</p></div>`}</section>`;
+}
+function labPlanHtml(ai) {
+  const p = S.strategy.plan, items = (p && Array.isArray(p.items)) ? p.items : [], busy = S.aiBusy.labPlan;
+  const left = items.filter(x => !x.registeredId).length;
+  const form = ai ? `<div class="plan-form"><div class="seg">${[3, 5].map(n => `<button data-act="lab-count" data-v="${n}" aria-pressed="${S.lab.count === n}">${n}개</button>`).join("")}</div>
+      <input id="lab-dir" value="${h(S.lab.dir)}" placeholder="방향 메모 (선택) 예: 중소기업 대상, 영상 위주, 인쌤 출연" autocomplete="off">
+      <button class="btn ai" data-act="lab-ai-plan" ${busy ? "disabled" : ""}>${busy ? "기획 중… (1분쯤)" : "✦ " + (items.length ? "새 기획안 만들기" : "기획안 만들기")}</button></div>` : "";
+  const cards = items.map((it, i) => {
+    const tags = it.tags || {};
+    const code = it.registeredCode || (it.registeredId && (S.creatives.find(c => c.id === it.registeredId) || {}).code) || "";
+    return `<article class="plan ${it.registeredId ? "done" : ""}">
+      <div class="plan-top"><span class="pnum">안 ${i + 1}</span>${it.registeredId ? `<span class="pill live">등록됨 ${h(code)}</span>` : ""}</div>
+      <b class="pc">${h(it.concept)}</b>
+      <div class="thumb"><small>인쌤의 경영꿀팁</small>${h(it.thumb || "썸네일 문구")}</div>
+      ${it.hookLine ? `<p class="hookline">“${h(it.hookLine)}”</p>` : ""}
+      <span class="chips">${DIMS.map(dm => tags[dm.key] ? `<span class="tag">${h(tags[dm.key])}</span>` : "").join("")}</span>
+      ${it.why ? `<p class="k"><b>근거</b>${h(it.why)}</p>` : ""}
+      ${it.testVariable ? `<p class="k"><b>테스트</b>${h(it.testVariable)}</p>` : ""}
+      <details><summary>대본 · 광고 문구 보기</summary><div class="script">${h(it.script || "")}</div>${it.primaryText ? `<p class="k"><b>기본 문구</b><br>${h(it.primaryText).replace(/\n/g, "<br>")}</p>` : ""}${it.headline ? `<p class="k"><b>제목</b>${h(it.headline)}</p>` : ""}</details>
+      <div class="actions">${it.registeredId ? `<button class="btn sm" data-act="open" data-id="${h(it.registeredId)}">소재 열기</button>` : `<button class="btn sm primary" data-act="plan-register" data-i="${i}" ${S.db ? "" : "disabled"}>기획으로 등록</button>`}</div>
+    </article>`;
+  }).join("");
+  return `<section class="block"><div class="bar-row"><div><h3>다음 기획안</h3><p class="sub">진단과 패턴 분석을 근거로 다음에 테스트할 소재를 제안해요. ‘기획으로 등록’을 누르면 소재 운영 탭의 기획 단계로 들어가요.</p></div>
+      <div class="actions">${left > 1 ? `<button class="btn" data-act="plan-register-all" ${S.db ? "" : "disabled"}>남은 ${left}개 모두 등록</button>` : ""}</div></div>
+    ${form}${items.length ? `<div class="plans">${cards}</div><p class="hint">${h(p.source || "기획안")} · ${h(String(p.createdAt || "").slice(0, 10))}${p.direction ? " · 방향: " + h(p.direction) : ""}. [사업명]·[최대 금액] 같은 빈칸은 실제 공고를 보고 채워주세요.</p>` : `<div class="empty"><b>아직 기획안이 없어요</b><p>${ai ? "‘기획안 만들기’를 누르면 지금 데이터를 근거로 소재를 제안해요." : "AI를 쓸 수 없는 화면이에요."}</p></div>`}</section>`;
+}
+function labTests(d) {
+  const rows = d.live.map(x => ({ ...x, v: verdict(x.m, d) })).sort((a, b) => b.v.prog - a.v.prog);
+  return `<section class="block"><div class="bar-row"><div><h3>지금 돌고 있는 소재 판정 <span class="muted">${rows.length}개</span></h3><p class="sub">‘운영중’ 단계 소재를 테스트 규칙으로 판정해요. 평균 리드당 비용 ${won(d.avg)} 기준이에요.</p></div></div>
+    ${rows.length ? `<div class="tbl-wrap"><table><thead><tr><th>소재</th><th class="n">소진액</th><th class="n">리드</th><th class="n">리드당 비용</th><th>판정 진행</th><th>판정</th></tr></thead><tbody>${rows.map(x => `<tr><td><button class="btn ghost sm" data-act="open" data-id="${h(x.c.id)}" data-tab="perf">${h(x.c.code)} ${h(x.c.concept || "")}</button></td><td class="n">${wonShort(x.m.spend)}</td><td class="n">${int(x.m.leads)}</td><td class="n">${won(x.m.cpl)}</td><td><span class="prog"><i style="width:${Math.min(100, Math.round(x.v.prog * 100))}%"></i></span><span class="muted sm">${Math.min(100, Math.round(x.v.prog * 100))}%</span></td><td><span class="pill ${x.v.cls}">${x.v.label}</span></td></tr>`).join("")}</tbody></table></div>`
+      : `<div class="empty"><b>운영중 단계 소재가 없어요</b><p>소재를 ‘운영중’으로 바꾸면 여기서 판정해요.</p></div>`}</section>`;
+}
+function labRulesHtml() {
+  const r = S.lab.rules || S.settings.rules;
+  return `<section class="block"><h3>테스트 규칙</h3><p class="sub">새 소재는 이 기준에 닿을 때까지 끄지 말고 기다렸다가 판정해요. 둘 중 하나라도 먼저 닿으면 판정해요.</p>
+    <div class="rules"><label class="f">판정 소진액 (원)<input type="number" data-rule="testBudget" value="${h(r.testBudget)}" min="10000" step="10000" inputmode="numeric"></label>
+      <label class="f">판정 리드 수<input type="number" data-rule="testLeads" value="${h(r.testLeads)}" min="1" inputmode="numeric"></label>
+      <label class="f">위닝·교체 기준 (평균 대비 %)<input type="number" data-rule="winMargin" value="${h(r.winMargin)}" min="5" max="80" inputmode="numeric"></label>
+      <button class="btn primary" id="rules-save" data-act="rules-save" ${S.lab.rulesDirty && S.db ? "" : "disabled"}>규칙 저장</button></div>
+    <p class="hint">리드당 비용이 평균보다 ${h(r.winMargin)}% 이상 싸면 위닝 후보, ${h(r.winMargin)}% 이상 비싸면 교체 권장이에요.</p></section>`;
+}
+function creativeLine(x) {
+  const c = x.c, m = x.m;
+  const tags = DIMS.map(dm => c.tags && c.tags[dm.key] ? `${dm.label}:${c.tags[dm.key]}` : "").filter(Boolean).join(", ");
+  const copy = [(c.headlines || [])[0], (c.primaryTexts || [])[0]].filter(Boolean).join(" / ").replace(/\s+/g, " ").slice(0, 220);
+  return `- ${c.code} ${c.concept} [${tags || "분류 없음"}] 소진 ${wonShort(m.spend)}, 리드 ${int(m.leads)}, 리드당 ${won(m.cpl)}, CTR ${pct(m.ctr, 2)}, 클릭→리드 ${pct(m.cvr)}${m.plays ? `, 25%시청 ${pct(m.hold25)}` : ""}${c.script ? `, 대본 첫 줄: ${String(c.script).split("\n")[0].slice(0, 60)}` : ""} | 문구: ${copy || "(없음)"}`;
+}
+function diagSummaryText(d) {
+  return [
+    `계정 요약: 분석 소재 ${d.pool.length}개, 소진 ${won(d.t.spend)}, 리드 ${int(d.t.leads)}, 평균 리드당 ${won(d.avg)}, 링크 CTR ${pct(d.t.ctr, 2)}, 클릭→리드 ${pct(d.t.cvr)}`,
+    `형식별: ` + d.formats.map(f => `${f.k} 소재 ${f.count}개 리드당 ${won(f.cpl)} CTR ${pct(f.ctr, 2)} 클릭→리드 ${pct(f.cvr)}`).join(" / "),
+    `상위 5개 소재 예산 비중 ${pct(d.top5share, 0)}`,
+    `판정 기준(소진 ${won(d.R.testBudget)} 또는 리드 ${d.R.testLeads}건) 전에 꺼진 소재 ${d.early.length}개`,
+    `리드 0건인데 5만원 이상 쓴 소재 ${d.zero.length}개, 메타 승인 거부 광고 ${d.disapproved.length}개`,
+    `싼 소재 vs 비싼 소재 중간값: 링크 CTR ${pct(d.base.ctrCheap, 2)} vs ${pct(d.base.ctrPricey, 2)}, 클릭→리드 ${pct(d.base.cvrCheap)} vs ${pct(d.base.cvrPricey)}`,
+    `분류별 최저 리드당 비용: ` + (d.bestByDim.map(b => `${b.dm.label}=${b.best.k}(${won(b.best.cpl)})`).join(", ") || "(분류 데이터 부족)")
+  ].join("\n");
+}
+async function aiLabAnalysis() {
+  if (!S.sample || S.aiOff || !S.db) return;
+  const d = S.meta.ads.length ? labDiag() : null;
+  if (!d || !d.pool.length) { toast("분석할 메타 성과가 아직 없어요"); return; }
+  const asc = d.judged.slice().sort((a, b) => a.m.cpl - b.m.cpl);
+  const best = asc.slice(0, 8), worst = asc.slice().reverse().slice(0, 6).filter(x => !best.includes(x));
+  const prompt = `${VOICE}
+
+아래는 인쌤(정책자금 컨설팅)의 메타 리드 광고 실적이에요. 목표는 신규 상담 리드를 싸게, 많이 받는 거예요.
+
+${diagSummaryText(d)}
+
+[리드당 비용이 낮은 소재]
+${best.map(creativeLine).join("\n") || "(없음)"}
+
+[리드당 비용이 높은 소재]
+${worst.map(creativeLine).join("\n") || "(없음)"}
+
+이 데이터로 아래를 정리해 주세요. 마크다운 굵게·제목 기호 없이, 짧은 글머리표로.
+1) 잘 된 소재들의 공통점 3가지 (메시지·형식·제목/문구 표현, 숫자 근거)
+2) 안 된 소재들의 공통점 2가지
+3) 다음 기획 원칙 5가지 (바로 쓸 수 있게 구체적으로)
+4) 주의할 점: 정책 위반 위험 표현, 표본이 적어 단정하기 어려운 부분`;
+  const ctl = new AbortController(); S.lab.ctl = ctl; S.lab.liveText = "";
+  const r = await runAi("labAnalysis", () => S.sample(prompt, { signal: ctl.signal, onText: ({ text }) => { S.lab.liveText = text; const el = $("#lab-live"); if (el) el.textContent = text; } }), scheduleRender);
+  if (!r || !r.text) return;
+  const doc = { text: r.text, createdAt: nowIso(), source: "허브 AI 분석", basis: `소재 ${d.pool.length}개 · 리드 ${Math.round(d.t.leads)}건` };
+  try { await S.db.doc("strategy/analysis").set(doc); toast("패턴 분석을 저장했어요"); }
+  catch (e) { toast(dbMsg(e)); S.strategy.analysis = doc; renderView(); }
+}
+function cleanPlanItem(x) {
+  const s = v => String(v == null ? "" : v).trim();
+  const tax = S.settings.taxonomy, tags = {};
+  for (const dm of DIMS) { const v = s(x[dm.key]); if (tax[dm.key].includes(v)) tags[dm.key] = v; }
+  return { concept: s(x.concept).slice(0, 60), thumb: s(x.thumb).slice(0, 40), hookLine: s(x.hookLine).slice(0, 120), script: s(x.script).slice(0, 3000), primaryText: s(x.primaryText).slice(0, 600), headline: s(x.headline).slice(0, 60), tags, why: s(x.why).slice(0, 400), testVariable: s(x.testVariable).slice(0, 200), registeredId: "" };
+}
+async function aiLabPlan() {
+  if (!S.sample || S.aiOff || !S.db) return;
+  const d = S.meta.ads.length ? labDiag() : null;
+  const tax = S.settings.taxonomy, n = S.lab.count || 3;
+  const best = d ? d.judged.slice().sort((a, b) => a.m.cpl - b.m.cpl).slice(0, 6) : [];
+  const an = S.strategy.analysis;
+  const prompt = `${VOICE}
+
+인쌤(정책자금·지원사업·기업인증 컨설턴트)이 메타 리드 광고로 신규 상담 신청을 받으려고 해요. 아래 실적과 분석을 근거로 다음에 테스트할 광고 소재 ${n}개를 기획해 주세요.
+
+${d && d.pool.length ? diagSummaryText(d) : "(메타 실적 없음)"}
+
+[지금까지 리드당 비용이 낮았던 소재]
+${best.map(creativeLine).join("\n") || "(없음)"}
+${an && an.text ? `\n[이전 패턴 분석]\n${String(an.text).slice(0, 4000)}\n` : ""}${S.lab.dir.trim() ? `\n[대표님 요청 방향] ${S.lab.dir.trim()}\n` : ""}
+규칙:
+- ${n}개는 서로 한 가지 변수만 다르게 (예: 같은 메시지를 이미지 vs 영상, 같은 형식에 후킹만 다르게). testVariable에 무엇을 비교하는지 적기
+- 실제로 있는지 모르는 사업명·금액·마감일은 지어내지 말고 [사업명], [최대 금액], [마감일]처럼 빈칸으로
+- thumb: 썸네일 하단 문구 12~15자. hookLine: 한숨에 말할 수 있는 첫 문장
+- script: 인쌤 대본 구조 그대로 줄바꿈으로 구분. 후킹 1줄 / 주제 2줄 / 혜택 2~6줄 / 포모 2~4줄 / CTA 1줄 (광고이므로 '아래 버튼 눌러서 상담 신청' 형태). 이미지 광고면 이미지에 넣을 문구 3~4줄 구성
+- primaryText: 기본 문구 2~4줄. headline: 제목 15자 안팎
+- 분류는 아래 보기 중에서만 고르기
+${DIMS.map(dm => `  ${dm.key}: ${tax[dm.key].join(" | ")}`).join("\n")}
+- why: 위 실적 중 어떤 숫자를 근거로 했는지 한두 문장
+
+JSON 하나로만 답하세요: {"items":[{"concept":"","thumb":"","hookLine":"","script":"","primaryText":"","headline":"","appeal":"","hook":"","format":"","layout":"","cast":"","target":"","why":"","testVariable":""}]}`;
+  const r = await runAi("labPlan", () => S.sample.json(prompt), scheduleRender);
+  if (!r) return;
+  const items = (Array.isArray(r.items) ? r.items : Array.isArray(r) ? r : []).slice(0, 8).map(cleanPlanItem).filter(x => x.concept);
+  if (!items.length) { toast("AI 답을 읽지 못했어요. 한 번 더 눌러주세요"); return; }
+  try { await S.db.doc("strategy/plan").set({ items, createdAt: nowIso(), source: "허브 AI 기획", direction: S.lab.dir.trim() }); toast(`기획안 ${items.length}개를 만들었어요`); }
+  catch (e) { toast(dbMsg(e)); }
+}
+async function registerPlan(idx) {
+  const p = S.strategy.plan;
+  if (!S.db || !p || !Array.isArray(p.items) || !idx.length) return;
+  const items = clone(p.items), base = maxCodeNum(); let n = 0;
+  try {
+    for (const i of idx) {
+      const it = items[i]; if (!it || it.registeredId) continue;
+      const id = S.db.collection("creatives").doc().id; n++;
+      await S.db.doc("creatives/" + id).set({
+        code: fmtCode(base + n), concept: it.concept || "", status: "plan", campaignType: "test", tags: it.tags || {}, keyword: "", landing: "",
+        thumb: it.thumb || "", script: it.script || "", primaryTexts: it.primaryText ? [it.primaryText] : [], headlines: it.headline ? [it.headline] : [],
+        metaAdIds: [], manual: { consults: 0, contracts: 0 }, winning: false, createdAt: today(), updatedAt: nowIso(),
+        note: `기획실 제안 (${String(p.createdAt || "").slice(0, 10)})\n근거: ${it.why || "-"}\n테스트: ${it.testVariable || "-"}`
+      });
+      it.registeredId = id; it.registeredCode = fmtCode(base + n);
+    }
+    await S.db.doc("strategy/plan").update({ items });
+    toast(n > 1 ? `${n}개를 기획 단계로 등록했어요` : "기획 단계로 등록했어요. 소재 운영 탭에서 이어서 다듬으세요");
+  } catch (e) { toast(dbMsg(e)); }
+}
+async function saveRules() {
+  if (!S.db || !S.lab.rules) return;
+  const r = S.lab.rules, pos = (v, dflt) => (Number(v) > 0 ? Math.round(Number(v)) : dflt);
+  const rules = { testBudget: pos(r.testBudget, RULE_DEFAULTS.testBudget), testLeads: pos(r.testLeads, RULE_DEFAULTS.testLeads), winMargin: Math.min(80, pos(r.winMargin, RULE_DEFAULTS.winMargin)) };
+  try {
+    if (S.settingsExists) await S.db.doc("settings/main").update({ rules, updatedAt: nowIso() });
+    else await S.db.doc("settings/main").set({ adAccountId: S.settings.adAccountId, adAccountName: S.settings.adAccountName, landing: S.settings.landing, taxonomy: S.settings.taxonomy, rules, updatedAt: nowIso() });
+    S.lab.rulesDirty = false; S.lab.rules = null; toast("테스트 규칙을 저장했어요"); renderView();
+  } catch (e) { toast(dbMsg(e)); }
+}
+
 /* ---------- view: 위닝 보고서 ---------- */
 function viewRep() {
   if (S.dbState === "loading") return `<div class="empty"><b>불러오는 중이에요</b></div>`;
@@ -691,7 +974,7 @@ function aarEditor(c, avg) {
     ${ai ? `<p class="hint" style="margin:-4px 0 6px">성과 숫자, 대본, 분류, 메모를 근거로 초안을 채워요. 고친 그대로 저장돼요.</p>` : ""}
     ${AAR.map(s => `<div class="aar-sec"><h4>${s.sec}</h4><div class="aar-fields">${s.auto ? `<div class="kpis small">
         ${kpi("소진액", wonShort(m.spend))}${kpi("메타 리드", int(m.leads))}${kpi("리드당 비용", won(m.cpl), avg && fin(m.cpl) ? { text: `평균 대비 ${Math.round((m.cpl - avg) / avg * 100)}%`, cls: m.cpl <= avg ? "good" : "bad" } : null)}
-        ${kpi("링크 CTR", pct(m.ctr, 2))}${kpi("25% 시청", pct(m.hold25))}${kpi("상담 · 계약", int(m.consults) + " · " + int(m.contracts))}</div><p class="hint" style="margin:0">메타 전체 기간 기준으로 자동 계산돼요.</p>`
+        ${kpi("링크 CTR", pct(m.ctr, 2))}${kpi("클릭 → 리드", pct(m.cvr))}${kpi("25% 시청", m.plays ? pct(m.hold25) : "—")}</div><p class="hint" style="margin:0">메타 전체 기간 기준으로 자동 계산돼요.</p>`
       : s.fields.map(([k, label]) => `<label class="f">${label}<textarea data-rf="${k}" rows="${k === "applyNext" || k === "learning" ? 3 : 2}">${h(d[k] || "")}</textarea></label>`).join("")}</div></div>`).join("")}
     <div class="row-actions"><span class="muted" id="rep-state">${S.rep.saving ? "저장 중…" : S.rep.dirty ? "저장 안 됨" : r && r.updatedAt ? "저장됨 · " + h(String(r.updatedAt).slice(0, 10)) : ""}</span>
       <button class="btn primary" id="rep-save" data-act="rep-save" ${!S.rep.dirty || S.rep.saving || !S.db ? "disabled" : ""}>회고 저장</button></div>
@@ -702,13 +985,14 @@ function aarEditor(c, avg) {
 function dimRows(dimKey) {
   const groups = new Map();
   for (const c of S.creatives) {
+    if (!analyzable(c)) continue;
     const m = metricsFor(c); if (!m.n) continue;
     const k = (c.tags && c.tags[dimKey]) || "미분류";
-    const g = groups.get(k) || { k, count: 0, spend: 0, leads: 0, imp: 0, clicks: 0, plays: 0, p25: 0, consults: 0, contracts: 0 };
-    g.count++; g.spend += m.spend; g.leads += m.leads; g.imp += m.imp; g.clicks += m.clicks; g.plays += m.plays; g.p25 += m.p25; g.consults += m.consults; g.contracts += m.contracts;
+    const g = groups.get(k) || { k, count: 0, spend: 0, leads: 0, imp: 0, clicks: 0, plays: 0, p25: 0 };
+    g.count++; g.spend += m.spend; g.leads += m.leads; g.imp += m.imp; g.clicks += m.clicks; g.plays += m.plays; g.p25 += m.p25;
     groups.set(k, g);
   }
-  return [...groups.values()].map(g => ({ ...g, cpl: g.leads ? g.spend / g.leads : null, ctr: g.imp ? g.clicks / g.imp : null, hold25: g.plays ? g.p25 / g.plays : null, thin: g.count < 2 || g.leads < 10 }))
+  return [...groups.values()].map(g => ({ ...g, cpl: g.leads ? g.spend / g.leads : null, ctr: g.imp ? g.clicks / g.imp : null, cvr: g.clicks ? g.leads / g.clicks : null, hold25: g.plays ? g.p25 / g.plays : null, thin: g.count < 2 || g.leads < 10 }))
     .sort((a, b) => (a.k === "미분류") - (b.k === "미분류") || (fin(a.cpl) ? a.cpl : Infinity) - (fin(b.cpl) ? b.cpl : Infinity));
 }
 function viewDim() {
@@ -721,10 +1005,10 @@ function viewDim() {
   const tabs = `<div class="dimtabs">${DIMS.map(d => `<button class="chip" data-act="dim" data-v="${d.key}" aria-pressed="${d.key === dm.key}">${d.label}</button>`).join("")}</div>`;
   if (!rows.length) return head + tabs + `<div class="empty"><b>비교할 데이터가 아직 없어요</b><p>소재에 메타 광고를 연결하고 분류 칩을 채우면 여기에 비교표가 나와요.</p></div>`;
   const ai = S.sample && !S.aiOff;
-  const table = `<div class="tbl-wrap"><table><thead><tr><th>${dm.label}</th><th class="n">소재</th><th class="n">소진액</th><th class="n">리드</th><th>리드당 비용</th><th class="n">링크 CTR</th><th class="n">25% 시청</th><th class="n">상담</th><th class="n">계약</th></tr></thead><tbody>
+  const table = `<div class="tbl-wrap"><table><thead><tr><th>${dm.label}</th><th class="n">소재</th><th class="n">소진액</th><th class="n">리드</th><th>리드당 비용</th><th class="n">링크 CTR</th><th class="n">클릭 → 리드</th><th class="n">25% 시청</th></tr></thead><tbody>
     ${rows.map(r => `<tr><td><b>${h(r.k)}</b>${r.thin ? ` <span class="muted sm">표본 적음</span>` : ""}</td><td class="n">${r.count}</td><td class="n">${wonShort(r.spend)}</td><td class="n">${int(r.leads)}</td>
       <td class="num" style="white-space:nowrap">${fin(r.cpl) ? `<span class="bartrack"><i class="${avg && r.cpl > avg ? "warn" : ""}" style="width:${Math.max(4, Math.round(r.cpl / maxCpl * 100))}%"></i></span>${won(r.cpl)}` : "—"}</td>
-      <td class="n">${pct(r.ctr, 2)}</td><td class="n">${pct(r.hold25)}</td><td class="n">${int(r.consults)}</td><td class="n">${int(r.contracts)}</td></tr>`).join("")}
+      <td class="n">${pct(r.ctr, 2)}</td><td class="n">${pct(r.cvr)}</td><td class="n">${r.plays ? pct(r.hold25) : "—"}</td></tr>`).join("")}
   </tbody></table></div>
   <p class="hint">막대가 짧을수록 리드를 싸게 받아요. 초록은 계정 평균(${won(avg)})보다 저렴, 주황은 비싼 항목이에요.</p>`;
   const insight = `<section class="block"><div class="bar-row"><div><h3>AI 인사이트</h3><p class="sub">다섯 가지 분류표를 모두 읽고 잘 되는 조합, 피할 것, 다음 소재 아이디어를 정리해요.</p></div>
@@ -760,7 +1044,7 @@ async function saveSettings() {
   const d = S.setDraft, tax = {};
   for (const dm of DIMS) { const raw = d.taxonomy[dm.key]; const list = (Array.isArray(raw) ? raw : String(raw || "").split(/[,\n]/)).map(s => String(s).trim()).filter(Boolean); tax[dm.key] = [...new Set(list)].slice(0, 30); if (!tax[dm.key].length) tax[dm.key] = DEFAULT_TAX[dm.key].slice(); }
   const acct = String(d.adAccountId || "").replace(/^act_/, "").trim();
-  const data = { adAccountId: acct, adAccountName: acct ? (d.adAccountName || "") : "", landing: String(d.landing || "").trim(), taxonomy: tax, updatedAt: nowIso() };
+  const data = { adAccountId: acct, adAccountName: acct ? (d.adAccountName || "") : "", landing: String(d.landing || "").trim(), taxonomy: tax, rules: S.settings.rules, updatedAt: nowIso() };
   try { await S.db.doc("settings/main").set(data); S.setDirty = false; S.setDraft = null; toast("설정을 저장했어요"); renderView(); }
   catch (e) { toast(dbMsg(e)); }
 }
@@ -850,7 +1134,8 @@ function dSetup() {
 
   <section class="sec"><h3>메모 · 위닝</h3>
     <label class="f">메모<textarea data-f="note" rows="3" placeholder="예: 마감 공고 나온 주에 올림. 댓글에 ‘한도’ 문의 많음">${h(d.note)}</textarea></label>
-    <div class="row-actions"><button class="btn ${d.winning ? "gold" : ""}" data-act="toggle-win" aria-pressed="${!!d.winning}">${d.winning ? "★ 위닝 소재" : "☆ 위닝으로 표시"}</button>
+    <div class="row-actions"><span class="actions"><button class="btn ${d.winning ? "gold" : ""}" data-act="toggle-win" aria-pressed="${!!d.winning}">${d.winning ? "★ 위닝 소재" : "☆ 위닝으로 표시"}</button>
+      <button class="btn ${d.excluded ? "" : "ghost"}" data-act="toggle-excl" aria-pressed="${!!d.excluded}" title="프로필 방문·트래픽처럼 리드 목적이 아닌 광고는 분석에서 빼요">${d.excluded ? "분석에서 제외됨" : "분석에서 제외"}</button></span>
       ${D.isNew ? "" : D.confirmDelete ? `<span class="confirm">이 소재와 회고를 지울까요? 메타 광고는 그대로예요. <button class="btn sm danger" data-act="del">삭제</button><button class="btn sm" data-act="del-cancel">취소</button></span>` : `<button class="btn ghost sm" data-act="del-ask">소재 삭제</button>`}</div>
   </section>`;
 }
@@ -894,20 +1179,13 @@ function dPerf() {
   <section class="sec"><h3>누적 성과 <span class="muted">전체 기간 · 세팅 ${m.n}개 · ${m.active ? "게재중" : "꺼짐"}</span></h3><div class="kpis">
     ${kpi("소진액", wonShort(m.spend))}${kpi("메타 리드", int(m.leads))}
     ${kpi("리드당 비용", won(m.cpl), diff != null ? { text: `계정 평균보다 ${Math.abs(Math.round(diff * 100))}% ${diff <= 0 ? "저렴" : "비쌈"}`, cls: diff <= 0 ? "good" : "bad" } : null, "key")}
-    ${kpi("링크 CTR", pct(m.ctr, 2))}${kpi("노출", int(m.imp))}${kpi("링크 클릭", int(m.clicks))}</div></section>
+    ${kpi("링크 CTR", pct(m.ctr, 2))}${kpi("클릭 → 리드", pct(m.cvr))}${kpi("노출", int(m.imp))}</div></section>
   ${tips.length ? `<div class="tips">${tips.map(t => `<div class="note ${t.tone}"><b>${h(t.title)}</b><span>${h(t.text)}</span></div>`).join("")}</div>` : ""}
   <section class="sec"><h3>영상 시청 <span class="muted">${fin(m.avgWatch) && m.plays ? `평균 ${m.avgWatch.toFixed(1)}초 시청 · 재생 ${int(m.plays)}회` : ""}</span></h3>${retentionSvg(m)}</section>
   <section class="sec"><h3>일별 추이 <span class="muted">최근 30일</span></h3>${dailyHtml(dd)}</section>
-  <section class="sec"><h3>상담 · 계약 <span class="muted">메타가 모르는 숫자예요. 직접 적고 저장하세요</span></h3>
-    <div class="grid2"><label class="f">상담 진행 수<input type="number" min="0" inputmode="numeric" data-f="manual.consults" data-derived="1" value="${h(num(d.manual.consults))}"></label>
-      <label class="f">계약 수<input type="number" min="0" inputmode="numeric" data-f="manual.contracts" data-derived="1" value="${h(num(d.manual.contracts))}"></label></div>
-    <div id="derived" style="margin-top:10px">${derivedHtml(m)}</div></section>
   <section class="sec"><h3>세팅된 광고 ${m.n}개</h3><div class="tbl-wrap"><table><thead><tr><th>광고 · 캠페인 › 세트</th><th>상태</th><th class="n">소진액</th><th class="n">리드</th><th class="n">리드당 비용</th><th class="n">링크 CTR</th></tr></thead><tbody>
     ${linkedAds(d).sort((a, b) => b.spend - a.spend).map(a => `<tr><td>${h(a.name)}<div class="muted sm">${h(a.campaign)} › ${h(a.adset)}</div></td><td><span class="lk-st ${a.status === "ACTIVE" ? "on" : ""}">${h(STATUS_KO[a.status] || a.status)}</span></td><td class="n">${wonShort(a.spend)}</td><td class="n">${int(a.leads)}</td><td class="n">${won(a.leads ? a.spend / a.leads : null)}</td><td class="n">${pct(a.imp ? a.clicks / a.imp : null, 2)}</td></tr>`).join("")}
   </tbody></table></div></section>`;
-}
-function derivedHtml(m) {
-  return `<div class="kpis small">${kpi("리드 → 상담", m.leads && m.consults ? pct(m.consults / m.leads, 0) : "—")}${kpi("상담당 비용", won(m.cpConsult))}${kpi("계약당 비용", won(m.cpContract))}</div>`;
 }
 function retentionSvg(m) {
   if (!m.plays) return `<p class="muted">영상 시청 데이터가 없어요. 이미지 광고이거나 아직 재생 기록이 없어요.</p>`;
@@ -1078,7 +1356,7 @@ async function aiAar() {
 
 [소재 코드] ${c.code} / [캠페인 유형] ${(CTYPES.find(t => t.key === c.campaignType) || CTYPES[0]).label}
 ${draftBrief(d)}
-[성과 · 메타 전체 기간] 소진액 ${won(m.spend)}, 리드 ${int(m.leads)}건, 리드당 비용 ${won(m.cpl)} (계정 평균 ${won(avg)}), 링크 CTR ${pct(m.ctr, 2)}, 재생 대비 25% 시청 ${pct(m.hold25)}, 완주 ${pct(m.done)}, 평균 시청 ${fin(m.avgWatch) ? m.avgWatch.toFixed(1) + "초" : "-"}, 상담 ${int(m.consults)}건, 계약 ${int(m.contracts)}건
+[성과 · 메타 전체 기간] 소진액 ${won(m.spend)}, 리드 ${int(m.leads)}건, 리드당 비용 ${won(m.cpl)} (계정 평균 ${won(avg)}), 링크 CTR ${pct(m.ctr, 2)}, 클릭→리드 ${pct(m.cvr)}, 재생 대비 25% 시청 ${m.plays ? pct(m.hold25) : "-"}, 완주 ${m.plays ? pct(m.done) : "-"}, 평균 시청 ${fin(m.avgWatch) && m.plays ? m.avgWatch.toFixed(1) + "초" : "-"}
 [메모] ${c.note || "(없음)"}
 
 JSON 하나로만 답하세요: {"hypothesis":"","usp":"","background":"","hook":"","benefit":"","fomo":"","visual":"","learning":"","applyNext":""}`;
@@ -1092,8 +1370,8 @@ JSON 하나로만 답하세요: {"hypothesis":"","usp":"","background":"","hook"
 async function aiInsight() {
   if (!S.sample || S.aiOff) return;
   const avg = accountAvgCpl();
-  const tables = DIMS.map(dm => `■ ${dm.label}\n` + dimRows(dm.key).map(r => `- ${r.k}: 소재 ${r.count}개, 소진액 ${won(r.spend)}, 리드 ${int(r.leads)}, 리드당 ${won(r.cpl)}, 링크CTR ${pct(r.ctr, 2)}, 25%시청 ${pct(r.hold25)}, 상담 ${int(r.consults)}, 계약 ${int(r.contracts)}${r.thin ? " (표본 적음)" : ""}`).join("\n")).join("\n\n");
-  const prompt = `인쌤의 정책자금 메타 광고 소재를 분류별로 묶은 성과표예요. 목표는 상담 리드를 싸게, 많이 받는 거예요. 계정 전체 평균 리드당 비용은 ${won(avg)}예요.
+  const tables = DIMS.map(dm => `■ ${dm.label}\n` + dimRows(dm.key).map(r => `- ${r.k}: 소재 ${r.count}개, 소진액 ${won(r.spend)}, 리드 ${int(r.leads)}, 리드당 ${won(r.cpl)}, 링크CTR ${pct(r.ctr, 2)}, 클릭→리드 ${pct(r.cvr)}, 25%시청 ${r.plays ? pct(r.hold25) : "-"}${r.thin ? " (표본 적음)" : ""}`).join("\n")).join("\n\n");
+  const prompt = `인쌤의 정책자금 메타 광고 소재를 분류별로 묶은 성과표예요. 목표는 신규 상담 리드를 싸게, 많이 받는 거예요. 계정 전체 평균 리드당 비용은 ${won(avg)}예요.
 
 ${tables}
 
@@ -1206,6 +1484,14 @@ document.addEventListener("click", ev => {
     case "link-same": if (D) { for (const a of S.meta.ads) if (a.name.trim() === D.draft.concept.trim() && !D.draft.metaAdIds.includes(a.id)) D.draft.metaAdIds.push(a.id); markDirty(); renderDrawer(); } break;
     case "unlink": if (D) { D.draft.metaAdIds = D.draft.metaAdIds.filter(x => x !== t.dataset.id); markDirty(); renderDrawer(); } break;
     case "toggle-win": if (D) { D.draft.winning = !D.draft.winning; markDirty(); renderDrawer(); } break;
+    case "toggle-excl": if (D) { D.draft.excluded = !D.draft.excluded; markDirty(); renderDrawer(); } break;
+    case "lab-count": S.lab.count = +t.dataset.v; renderView(); break;
+    case "lab-ai-analysis": aiLabAnalysis(); break;
+    case "lab-ai-plan": aiLabPlan(); break;
+    case "lab-stop": if (S.lab.ctl) S.lab.ctl.abort(); break;
+    case "plan-register": registerPlan([+t.dataset.i]); break;
+    case "plan-register-all": registerPlan(((S.strategy.plan && S.strategy.plan.items) || []).map((x, i) => x.registeredId ? -1 : i).filter(i => i >= 0)); break;
+    case "rules-save": saveRules(); break;
     case "del-ask": if (D) { D.confirmDelete = true; renderDrawer(); } break;
     case "del-cancel": if (D) { D.confirmDelete = false; renderDrawer(); } break;
     case "del": deleteCreative(); break;
@@ -1232,13 +1518,14 @@ document.addEventListener("input", ev => {
     setPath(D.draft, el.dataset.f, el.value); markDirty();
     if (el.dataset.live) updateOutputs();
     if (el.dataset.f === "thumb") { const c = $("#thumb-count"); if (c) c.textContent = [...el.value].length; }
-    if (el.dataset.derived) { const box = $("#derived"); if (box) box.innerHTML = derivedHtml(metricsFor(D.draft)); }
   } else if (el.dataset.rf && S.rep.draft) {
     S.rep.draft[el.dataset.rf] = el.value; S.rep.dirty = true;
     const b = $("#rep-save"); if (b) b.disabled = !S.db; const s = $("#rep-state"); if (s) s.textContent = "저장 안 됨";
   } else if (el.dataset.sf && S.setDraft) {
     setPath(S.setDraft, el.dataset.sf, el.value); S.setDirty = true; const s = $("#set-state"); if (s) s.textContent = "저장 안 됨";
   } else if (el.id === "link-q" && D) { D.linkQuery = el.value; const box = $("#link-list"); if (box) box.innerHTML = linkListHtml(); }
+  else if (el.id === "lab-dir") { S.lab.dir = el.value; }
+  else if (el.dataset.rule) { if (!S.lab.rules) S.lab.rules = clone(S.settings.rules); S.lab.rules[el.dataset.rule] = el.value; S.lab.rulesDirty = true; const b = $("#rules-save"); if (b) b.disabled = !S.db; }
 });
 document.addEventListener("change", ev => {
   const el = ev.target;
@@ -1276,10 +1563,16 @@ async function boot() {
     if (S.rep.id && !S.rep.dirty && !S.rep.saving) S.rep.draft = clone(r[S.rep.id] || {});
     scheduleRender();
   }, () => {});
+  db.collection("strategy").onSnapshot(snap => {
+    const st = { analysis: null, plan: null };
+    for (const d of snap.docs) if (d.id === "analysis" || d.id === "plan") st[d.id] = d.data();
+    S.strategy = st; if (S.tab === "lab") scheduleRender(); else renderTabs();
+  }, () => {});
   db.doc("settings/main").onSnapshot(snap => {
     S.settingsExists = snap.exists;
     S.settings = mergeSettings(snap.exists ? snap.data() : {});
     if (!S.setDirty) S.setDraft = null;
+    if (!S.lab.rulesDirty) S.lab.rules = null;
     startMetaWatch(); scheduleRender(); scheduleDrawer();
   }, () => {});
   if (!mcp) scheduleRender();

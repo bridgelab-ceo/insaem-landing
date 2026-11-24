@@ -28,3 +28,10 @@
   - legal-contract-review (modu-ai/moai-cowork) — 계약서 패턴, 점수 18
   - commerce-ad-claim-compliance-kr (modu-ai/moai-cowork) — 광고 문구 패턴, 점수 12
 - 제안: 정책 기준 원문 확인 — 맞는 공개 스킬 없음, 전용 스킬 제작 제안
+
+## 2026-11-24 (방식 변경: 프로젝트 감시)
+- 대표님 요청: 지난 작업 이력이 아니라, 앞으로 진행하는 프로젝트를 지켜보다가 추천
+- 과거 이력 기반 관찰 일지(observations.md) 삭제
+- 철회 (과거 이력 기반이라): legal-contract-review, commerce-ad-claim-compliance-kr (modu-ai/moai-cowork)
+- 추천 (결정 대기):
+  - webapp-testing (anthropics/skills) — 회사 업무 플랫폼 / 테스트 단계, 중요도 3 × 적합도 2 = 6

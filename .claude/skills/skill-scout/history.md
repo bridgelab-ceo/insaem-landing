@@ -35,3 +35,4 @@
 - 철회 (과거 이력 기반이라): legal-contract-review, commerce-ad-claim-compliance-kr (modu-ai/moai-cowork)
 - 추천 (결정 대기):
   - webapp-testing (anthropics/skills) — 회사 업무 플랫폼 / 테스트 단계, 중요도 3 × 적합도 2 = 6
+- 2026-11-24 webapp-testing 설치 승인. 프로젝트 저장소(kbgc-agent-team)는 이 세션에서 접근 불가 → 프로젝트 세션에 설치 명령 전달 대기. 설치 명령은 빈 폴더에서 시험해 정상 동작 확인(파일 6개, 점검 때와 동일)

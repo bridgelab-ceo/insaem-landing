@@ -17,3 +17,14 @@
   - marketing-meta-ads-analyzer (modu-ai/moai-cowork) — 내용이 얇고 소재 허브·Meta 광고 연결과 겹침
   - government-support-survey (NomaDamas/k-skill) — 실행 때마다 외부 패키지·외부 서버 경유, consult-gov-grant로 대체
   - doc-hwp (modu-ai/moai-cowork) — 보류: 한글 파일 사업계획서를 자주 만들면 재검토
+
+## 2026-11-24 (관찰 기반 재평가)
+- 방식 변경: 작업 세션 관찰 → 마찰 패턴 점수 → 기준 통과 시에만 추천
+- 철회 (관찰된 마찰과 연결 안 됨):
+  - ad-creative (coreyhaines31/marketingskills) — 소재 기획에서 반복 막힘이 관찰되지 않음
+  - cro (coreyhaines31/marketingskills) — 상세페이지 전환 관련 마찰 관찰 안 됨
+  - consult-gov-grant (modu-ai/moai-cowork) — 관찰된 마찰은 '공고 탐색'이 아니라 '기준 수치 원문 확인'이라 적합도 낮음
+- 추천 (결정 대기):
+  - legal-contract-review (modu-ai/moai-cowork) — 계약서 패턴, 점수 18
+  - commerce-ad-claim-compliance-kr (modu-ai/moai-cowork) — 광고 문구 패턴, 점수 12
+- 제안: 정책 기준 원문 확인 — 맞는 공개 스킬 없음, 전용 스킬 제작 제안

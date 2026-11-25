@@ -43,3 +43,4 @@
 - 추천 (결정 대기):
   - korean-privacy-terms (kimlawtech/korean-privacy-terms) — 배포 단계 / 개인정보 처리방침·동의 화면, 중요도 3 × 적합도 3 = 9
 - 기준 미달: PWA·푸시 알림 스킬 (점수 4)
+- 2026-11-25 korean-privacy-terms 설치 승인 → 프로젝트 세션에 설치 요청 전달 (이 세션은 프로젝트 저장소 권한 없음). 다음 정기 확인 때 설치 결과 확인
